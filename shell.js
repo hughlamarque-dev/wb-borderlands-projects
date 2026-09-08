@@ -6,7 +6,7 @@
   const cache=new Map(),urls=new Set();
   const el=id=>document.getElementById(id);
   const base=new URL('.',location.href);
-  async function request(path){const r=await fetch(new URL(path,base),{credentials:'same-origin',cache:'no-cache'});if(!r.ok)throw new Error('A map file could not be loaded. Please try again.');return r;}
+  async function request(path){const r=await fetch(new URL(path,base),{credentials:'same-origin',cache:path.startsWith('assets/')?'force-cache':'no-cache'});if(!r.ok)throw new Error('A map file could not be loaded. Please try again.');return r;}
   async function decrypt(desc){
     const localKey=key,localEpoch=epoch;if(!localKey)throw new Error('The session is locked.');
     const encrypted=await(await request(desc.path)).arrayBuffer();
