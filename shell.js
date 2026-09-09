@@ -39,7 +39,7 @@
     json:async name=>JSON.parse(dec.decode(await asset(name))),
     text:async name=>dec.decode(await asset(name)),
     blob:async name=>{const data=await asset(name);const u=URL.createObjectURL(new Blob([data],{type:manifest[name].mime}));urls.add(u);return u;},
-    go:route=>{location.hash=route;},
+    go:target=>{if(location.hash.slice(1)===target)return route();location.hash=target;},
     status:message=>{el('status').textContent=message||'';el('status').style.display=message?'block':'none';}
   };
   async function route(){
